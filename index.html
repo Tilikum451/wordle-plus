@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Wordle Plus</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCI+CiAgPGcgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogICAgPHBvbHlnb24gcG9pbnRzPSIyMCwyIDI3Ljc5NSw2LjUgMjAsMTEgMTIuMjA1LDYuNSIgZmlsbD0iIzZhYWE2NCIvPgogICAgPHBvbHlnb24gcG9pbnRzPSIyNy43OTUsNi41IDM1LjU5LDExIDI3Ljc5NSwxNS41IDIwLDExIiBmaWxsPSIjZjk3MzE2Ii8+CiAgICA8cG9seWdvbiBwb2ludHM9IjEyLjIwNSw2LjUgMjAsMTEgMTIuMjA1LDE1LjUgNC40MSwxMSIgZmlsbD0iI2M5YjQ1OCIvPgogICAgPHBvbHlnb24gcG9pbnRzPSIyMCwxMSAyNy43OTUsMTUuNSAyMCwyMCAxMi4yMDUsMTUuNSIgZmlsbD0iIzZiNzI4MCIvPgogICAgPHBvbHlnb24gcG9pbnRzPSI0LjQxLDExIDEyLjIwNSwxNS41IDEyLjIwNSwyNC41IDQuNDEsMjAiIGZpbGw9IiNmOTczMTYiLz4KICAgIDxwb2x5Z29uIHBvaW50cz0iMTIuMjA1LDE1LjUgMjAsMjAgMjAsMjkgMTIuMjA1LDI0LjUiIGZpbGw9IiNjOWI0NTgiLz4KICAgIDxwb2x5Z29uIHBvaW50cz0iNC40MSwyMCAxMi4yMDUsMjQuNSAxMi4yMDUsMzMuNSA0LjQxLDI5IiBmaWxsPSIjNmI3MjgwIi8+CiAgICA8cG9seWdvbiBwb2ludHM9IjEyLjIwNSwyNC41IDIwLDI5IDIwLDM4IDEyLjIwNSwzMy41IiBmaWxsPSIjNmFhYTY0Ii8+CiAgICA8cG9seWdvbiBwb2ludHM9IjIwLDIwIDI3Ljc5NSwxNS41IDI3Ljc5NSwyNC41IDIwLDI5IiBmaWxsPSIjYzliNDU4Ii8+CiAgICA8cG9seWdvbiBwb2ludHM9IjI3Ljc5NSwxNS41IDM1LjU5LDExIDM1LjU5LDIwIDI3Ljc5NSwyNC41IiBmaWxsPSIjNmI3MjgwIi8+CiAgICA8cG9seWdvbiBwb2ludHM9IjIwLDI5IDI3Ljc5NSwyNC41IDI3Ljc5NSwzMy41IDIwLDM4IiBmaWxsPSIjNmFhYTY0Ii8+CiAgICA8cG9seWdvbiBwb2ludHM9IjI3Ljc5NSwyNC41IDM1LjU5LDIwIDM1LjU5LDI5IDI3Ljc5NSwzMy41IiBmaWxsPSIjZjk3MzE2Ii8+CiAgPC9nPgogIDxwb2x5Z29uIHBvaW50cz0iMjAsMiAzNS41OSwxMSAyMCwyMCA0LjQxLDExIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjEyIi8+CiAgPHBvbHlnb24gcG9pbnRzPSI0LjQxLDExIDIwLDIwIDIwLDM4IDQuNDEsMjkiIGZpbGw9IiMwMDAwMDAiIG9wYWNpdHk9IjAuMjIiLz4KICA8cG9seWdvbiBwb2ludHM9IjIwLDIwIDM1LjU5LDExIDM1LjU5LDI5IDIwLDM4IiBmaWxsPSIjMDAwMDAwIiBvcGFjaXR5PSIwLjA4Ii8+Cjwvc3ZnPgo=">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,77u/PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCI+CiAgPGcgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogICAgICAgIDxwb2x5Z29uIHBvaW50cz0iMjAsMiAyNS4xOTYsNSAyMCw4IDE0LjgwNCw1IiBzdHlsZT0iZmlsbDojNmFhYTY0Ii8+CiAgICAgICAgPHBvbHlnb24gcG9pbnRzPSIyNS4xOTYsNSAzMC4zOTIsOCAyNS4xOTYsMTEgMjAsOCIgc3R5bGU9ImZpbGw6I2Y5NzMxNiIvPgogICAgICAgIDxwb2x5Z29uIHBvaW50cz0iMzAuMzkyLDggMzUuNTg4LDExIDMwLjM5MiwxNCAyNS4xOTYsMTEiIHN0eWxlPSJmaWxsOiNjOWI0NTgiLz4KICAgICAgICA8cG9seWdvbiBwb2ludHM9IjE0LjgwNCw1IDIwLDggMTQuODA0LDExIDkuNjA4LDgiIHN0eWxlPSJmaWxsOiM2YjcyODAiLz4KICAgICAgICA8cG9seWdvbiBwb2ludHM9IjIwLDggMjUuMTk2LDExIDIwLDE0IDE0LjgwNCwxMSIgc3R5bGU9ImZpbGw6IzZhYWE2NCIvPgogICAgICAgIDxwb2x5Z29uIHBvaW50cz0iMjUuMTk2LDExIDMwLjM5MiwxNCAyNS4xOTYsMTcgMjAsMTQiIHN0eWxlPSJmaWxsOiNmOTczMTYiLz4KICAgICAgICA8cG9seWdvbiBwb2ludHM9IjkuNjA4LDggMTQuODA0LDExIDkuNjA4LDE0IDQuNDEyLDExIiBzdHlsZT0iZmlsbDojYzliNDU4Ii8+CiAgICAgICAgPHBvbHlnb24gcG9pbnRzPSIxNC44MDQsMTEgMjAsMTQgMTQuODA0LDE3IDkuNjA4LDE0IiBzdHlsZT0iZmlsbDojNmI3MjgwIi8+CiAgICAgICAgPHBvbHlnb24gcG9pbnRzPSIyMCwxNCAyNS4xOTYsMTcgMjAsMjAgMTQuODA0LDE3IiBzdHlsZT0iZmlsbDojNmFhYTY0Ii8+CgogICAgICAgIDxwb2x5Z29uIHBvaW50cz0iNC40MTIsMTEgOS42MDgsMTQgOS42MDgsMjAgNC40MTIsMTciIHN0eWxlPSJmaWxsOiNmOTczMTYiLz4KICAgICAgICA8cG9seWdvbiBwb2ludHM9IjkuNjA4LDE0IDE0LjgwNCwxNyAxNC44MDQsMjMgOS42MDgsMjAiIHN0eWxlPSJmaWxsOiNjOWI0NTgiLz4KICAgICAgICA8cG9seWdvbiBwb2ludHM9IjE0LjgwNCwxNyAyMCwyMCAyMCwyNiAxNC44MDQsMjMiIHN0eWxlPSJmaWxsOiM2YjcyODAiLz4KICAgICAgICA8cG9seWdvbiBwb2ludHM9IjQuNDEyLDE3IDkuNjA4LDIwIDkuNjA4LDI2IDQuNDEyLDIzIiBzdHlsZT0iZmlsbDojNmFhYTY0Ii8+CiAgICAgICAgPHBvbHlnb24gcG9pbnRzPSI5LjYwOCwyMCAxNC44MDQsMjMgMTQuODA0LDI5IDkuNjA4LDI2IiBzdHlsZT0iZmlsbDojZjk3MzE2Ii8+CiAgICAgICAgPHBvbHlnb24gcG9pbnRzPSIxNC44MDQsMjMgMjAsMjYgMjAsMzIgMTQuODA0LDI5IiBzdHlsZT0iZmlsbDojYzliNDU4Ii8+CiAgICAgICAgPHBvbHlnb24gcG9pbnRzPSI0LjQxMiwyMyA5LjYwOCwyNiA5LjYwOCwzMiA0LjQxMiwyOSIgc3R5bGU9ImZpbGw6IzZiNzI4MCIvPgogICAgICAgIDxwb2x5Z29uIHBvaW50cz0iOS42MDgsMjYgMTQuODA0LDI5IDE0LjgwNCwzNSA5LjYwOCwzMiIgc3R5bGU9ImZpbGw6IzZhYWE2NCIvPgogICAgICAgIDxwb2x5Z29uIHBvaW50cz0iMTQuODA0LDI5IDIwLDMyIDIwLDM4IDE0LjgwNCwzNSIgc3R5bGU9ImZpbGw6I2Y5NzMxNiIvPgoKICAgICAgICA8cG9seWdvbiBwb2ludHM9IjIwLDIwIDI1LjE5NiwxNyAyNS4xOTYsMjMgMjAsMjYiIHN0eWxlPSJmaWxsOiNjOWI0NTgiLz4KICAgICAgICA8cG9seWdvbiBwb2ludHM9IjI1LjE5NiwxNyAzMC4zOTIsMTQgMzAuMzkyLDIwIDI1LjE5NiwyMyIgc3R5bGU9ImZpbGw6IzZiNzI4MCIvPgogICAgICAgIDxwb2x5Z29uIHBvaW50cz0iMzAuMzkyLDE0IDM1LjU4OCwxMSAzNS41ODgsMTcgMzAuMzkyLDIwIiBzdHlsZT0iZmlsbDojNmFhYTY0Ii8+CiAgICAgICAgPHBvbHlnb24gcG9pbnRzPSIyMCwyNiAyNS4xOTYsMjMgMjUuMTk2LDI5IDIwLDMyIiBzdHlsZT0iZmlsbDojZjk3MzE2Ii8+CiAgICAgICAgPHBvbHlnb24gcG9pbnRzPSIyNS4xOTYsMjMgMzAuMzkyLDIwIDMwLjM5MiwyNiAyNS4xOTYsMjkiIHN0eWxlPSJmaWxsOiNjOWI0NTgiLz4KICAgICAgICA8cG9seWdvbiBwb2ludHM9IjMwLjM5MiwyMCAzNS41ODgsMTcgMzUuNTg4LDIzIDMwLjM5MiwyNiIgc3R5bGU9ImZpbGw6IzZiNzI4MCIvPgogICAgICAgIDxwb2x5Z29uIHBvaW50cz0iMjAsMzIgMjUuMTk2LDI5IDI1LjE5NiwzNSAyMCwzOCIgc3R5bGU9ImZpbGw6IzZhYWE2NCIvPgogICAgICAgIDxwb2x5Z29uIHBvaW50cz0iMjUuMTk2LDI5IDMwLjM5MiwyNiAzMC4zOTIsMzIgMjUuMTk2LDM1IiBzdHlsZT0iZmlsbDojZjk3MzE2Ii8+CiAgICAgICAgPHBvbHlnb24gcG9pbnRzPSIzMC4zOTIsMjYgMzUuNTg4LDIzIDM1LjU4OCwyOSAzMC4zOTIsMzIiIHN0eWxlPSJmaWxsOiNjOWI0NTgiLz4KICA8L2c+CiAgPHBvbHlnb24gcG9pbnRzPSIyMCwyIDM1LjU5LDExIDIwLDIwIDQuNDEsMTEiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuMTIiLz4KICA8cG9seWdvbiBwb2ludHM9IjQuNDEsMTEgMjAsMjAgMjAsMzggNC40MSwyOSIgZmlsbD0iIzAwMDAwMCIgb3BhY2l0eT0iMC4yMiIvPgogIDxwb2x5Z29uIHBvaW50cz0iMjAsMjAgMzUuNTksMTEgMzUuNTksMjkgMjAsMzgiIGZpbGw9IiMwMDAwMDAiIG9wYWNpdHk9IjAuMDgiLz4KPC9zdmc+">
 <script>
 (function () {
   try {
@@ -482,20 +482,35 @@ main {
   <div class="logo">
     <svg class="logo-mark" viewBox="0 0 40 40" width="34" height="34" aria-hidden="true">
       <g stroke="var(--color-bg)" stroke-width="1" stroke-linejoin="round">
-        <polygon points="20,2 27.795,6.5 20,11 12.205,6.5" style="fill:var(--color-correct)"/>
-        <polygon points="27.795,6.5 35.59,11 27.795,15.5 20,11" style="fill:var(--color-present)"/>
-        <polygon points="12.205,6.5 20,11 12.205,15.5 4.41,11" style="fill:var(--color-accent)"/>
-        <polygon points="20,11 27.795,15.5 20,20 12.205,15.5" style="fill:var(--color-absent)"/>
+        <polygon points="20,2 25.196,5 20,8 14.804,5" style="fill:var(--color-correct)"/>
+        <polygon points="25.196,5 30.392,8 25.196,11 20,8" style="fill:var(--color-present)"/>
+        <polygon points="30.392,8 35.588,11 30.392,14 25.196,11" style="fill:var(--color-accent)"/>
+        <polygon points="14.804,5 20,8 14.804,11 9.608,8" style="fill:var(--color-absent)"/>
+        <polygon points="20,8 25.196,11 20,14 14.804,11" style="fill:var(--color-correct)"/>
+        <polygon points="25.196,11 30.392,14 25.196,17 20,14" style="fill:var(--color-present)"/>
+        <polygon points="9.608,8 14.804,11 9.608,14 4.412,11" style="fill:var(--color-accent)"/>
+        <polygon points="14.804,11 20,14 14.804,17 9.608,14" style="fill:var(--color-absent)"/>
+        <polygon points="20,14 25.196,17 20,20 14.804,17" style="fill:var(--color-correct)"/>
 
-        <polygon points="4.41,11 12.205,15.5 12.205,24.5 4.41,20" style="fill:var(--color-present)"/>
-        <polygon points="12.205,15.5 20,20 20,29 12.205,24.5" style="fill:var(--color-accent)"/>
-        <polygon points="4.41,20 12.205,24.5 12.205,33.5 4.41,29" style="fill:var(--color-absent)"/>
-        <polygon points="12.205,24.5 20,29 20,38 12.205,33.5" style="fill:var(--color-correct)"/>
+        <polygon points="4.412,11 9.608,14 9.608,20 4.412,17" style="fill:var(--color-present)"/>
+        <polygon points="9.608,14 14.804,17 14.804,23 9.608,20" style="fill:var(--color-accent)"/>
+        <polygon points="14.804,17 20,20 20,26 14.804,23" style="fill:var(--color-absent)"/>
+        <polygon points="4.412,17 9.608,20 9.608,26 4.412,23" style="fill:var(--color-correct)"/>
+        <polygon points="9.608,20 14.804,23 14.804,29 9.608,26" style="fill:var(--color-present)"/>
+        <polygon points="14.804,23 20,26 20,32 14.804,29" style="fill:var(--color-accent)"/>
+        <polygon points="4.412,23 9.608,26 9.608,32 4.412,29" style="fill:var(--color-absent)"/>
+        <polygon points="9.608,26 14.804,29 14.804,35 9.608,32" style="fill:var(--color-correct)"/>
+        <polygon points="14.804,29 20,32 20,38 14.804,35" style="fill:var(--color-present)"/>
 
-        <polygon points="20,20 27.795,15.5 27.795,24.5 20,29" style="fill:var(--color-accent)"/>
-        <polygon points="27.795,15.5 35.59,11 35.59,20 27.795,24.5" style="fill:var(--color-absent)"/>
-        <polygon points="20,29 27.795,24.5 27.795,33.5 20,38" style="fill:var(--color-correct)"/>
-        <polygon points="27.795,24.5 35.59,20 35.59,29 27.795,33.5" style="fill:var(--color-present)"/>
+        <polygon points="20,20 25.196,17 25.196,23 20,26" style="fill:var(--color-accent)"/>
+        <polygon points="25.196,17 30.392,14 30.392,20 25.196,23" style="fill:var(--color-absent)"/>
+        <polygon points="30.392,14 35.588,11 35.588,17 30.392,20" style="fill:var(--color-correct)"/>
+        <polygon points="20,26 25.196,23 25.196,29 20,32" style="fill:var(--color-present)"/>
+        <polygon points="25.196,23 30.392,20 30.392,26 25.196,29" style="fill:var(--color-accent)"/>
+        <polygon points="30.392,20 35.588,17 35.588,23 30.392,26" style="fill:var(--color-absent)"/>
+        <polygon points="20,32 25.196,29 25.196,35 20,38" style="fill:var(--color-correct)"/>
+        <polygon points="25.196,29 30.392,26 30.392,32 25.196,35" style="fill:var(--color-present)"/>
+        <polygon points="30.392,26 35.588,23 35.588,29 30.392,32" style="fill:var(--color-accent)"/>
       </g>
       <polygon points="20,2 35.59,11 20,20 4.41,11" fill="#fff" opacity="0.12"/>
       <polygon points="4.41,11 20,20 20,38 4.41,29" fill="#000" opacity="0.22"/>
@@ -835,7 +850,7 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
   }
 
   function giveHint() {
-    if (game.hintGiven) return;
+    if (game.hintGiven || game.status !== "playing") return;
     var revealed = new Array(WORD_LENGTH).fill(false);
     game.guesses.forEach(function (g) {
       g.result.forEach(function (status, i) { if (status === "correct") revealed[i] = true; });
@@ -888,7 +903,7 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
       setTimeout(function () {
         celebrateRow(rowFinished);
         recordStatsIfNeeded();
-        setTimeout(function () { openStatsModal(); }, 800);
+        setTimeout(function () { openStatsModal(); }, 1500);
       }, revealDuration);
     } else if (game.guesses.length >= MAX_GUESSES) {
       game.status = "lost";
