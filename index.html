@@ -186,6 +186,17 @@ main {
 .tile.present { background: var(--color-present); border-color: var(--color-present); color: #fff; }
 .tile.absent { background: var(--color-absent); border-color: var(--color-absent); color: #fff; }
 
+.tile.hint {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent);
+  animation: hint-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes hint-pulse {
+  0%, 100% { box-shadow: 0 0 0 2px var(--color-accent); }
+  50% { box-shadow: 0 0 10px 3px var(--color-accent); }
+}
+
 @keyframes pop {
   0% { transform: scale(0.95); }
   100% { transform: scale(1); }
@@ -624,7 +635,7 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
         if (parsed.dayIndex === dayIndex) return parsed;
       } catch (e) {}
     }
-    return { dayIndex: dayIndex, guesses: [], status: "playing", hintGiven: false };
+    return { dayIndex: dayIndex, guesses: [], status: "playing", hintGiven: false, hint: null };
   }
 
   function saveGame() {
@@ -700,6 +711,19 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
   var currentGuess = "";
   var activeRow = game.guesses.length;
   var inputLocked = game.status !== "playing";
+  var hintIndex = game.hint ? game.hint.index : null;
+
+  function composeFullGuess() {
+    var slots = new Array(WORD_LENGTH).fill("");
+    if (hintIndex !== null) slots[hintIndex] = game.hint.letter;
+    var ptr = 0;
+    for (var i = 0; i < currentGuess.length; i++) {
+      while (slots[ptr] !== "") ptr++;
+      slots[ptr] = currentGuess[i];
+      ptr++;
+    }
+    return slots;
+  }
 
   var keyStatus = {};
 
@@ -744,10 +768,12 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
   function renderCurrentRow() {
     var tiles = rows[activeRow];
     if (!tiles) return;
+    var slots = composeFullGuess();
     for (var i = 0; i < WORD_LENGTH; i++) {
       var tile = tiles[i];
-      tile.textContent = currentGuess[i] || "";
-      tile.classList.toggle("filled", !!currentGuess[i]);
+      tile.textContent = slots[i];
+      tile.classList.toggle("filled", !!slots[i]);
+      tile.classList.toggle("hint", hintIndex === i);
     }
   }
 
@@ -789,6 +815,10 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
 
   // ---------- input handling ----------
 
+  function typedLimit() {
+    return WORD_LENGTH - (hintIndex !== null ? 1 : 0);
+  }
+
   function handleKey(key) {
     if (inputLocked) return;
     key = key.toLowerCase();
@@ -797,7 +827,7 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
     } else if (key === "backspace") {
       currentGuess = currentGuess.slice(0, -1);
       renderCurrentRow();
-    } else if (/^[a-z]$/.test(key) && currentGuess.length < WORD_LENGTH) {
+    } else if (/^[a-z]$/.test(key) && currentGuess.length < typedLimit()) {
       currentGuess += key;
       renderCurrentRow();
     }
@@ -812,30 +842,40 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
     var candidates = [];
     for (var i = 0; i < WORD_LENGTH; i++) { if (!revealed[i]) candidates.push(i); }
     game.hintGiven = true;
-    saveGame();
-    if (candidates.length === 0) return;
+    if (candidates.length === 0) { saveGame(); return; }
     var idx = candidates[Math.floor(Math.random() * candidates.length)];
-    showToast("Hint: position " + (idx + 1) + ' is "' + ANSWER[idx].toUpperCase() + '"', 4000);
+    game.hint = { index: idx, letter: ANSWER[idx] };
+    hintIndex = idx;
+    saveGame();
+    showToast("Hint revealed on the board!", 2500);
+    var tile = rows[activeRow] && rows[activeRow][idx];
+    if (tile) {
+      tile.classList.add("flip");
+      setTimeout(renderCurrentRow, 250);
+      setTimeout(function () { tile.classList.remove("flip"); }, 500);
+    } else {
+      renderCurrentRow();
+    }
   }
 
   function submitGuess() {
-    if (currentGuess.length < WORD_LENGTH) {
+    if (currentGuess.length < typedLimit()) {
       showToast("Not enough letters");
       shakeRow(activeRow);
       return;
     }
-    if (!VALID_SET.has(currentGuess)) {
+    var guessWord = composeFullGuess().join("");
+    if (!VALID_SET.has(guessWord)) {
       showToast("Not in word list");
       shakeRow(activeRow);
       return;
     }
-    var result = evaluateGuess(currentGuess, ANSWER);
-    game.guesses.push({ word: currentGuess, result: result });
-    renderCompletedRow(activeRow, currentGuess, result, true);
+    var result = evaluateGuess(guessWord, ANSWER);
+    game.guesses.push({ word: guessWord, result: result });
+    renderCompletedRow(activeRow, guessWord, result, true);
 
     var won = result.every(function (s) { return s === "correct"; });
     var rowFinished = activeRow;
-    var guessWord = currentGuess;
     currentGuess = "";
 
     var revealDuration = WORD_LENGTH * 200 + 400;
