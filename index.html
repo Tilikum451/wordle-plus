@@ -719,6 +719,10 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
   var game = loadGame();
   var stats = loadStats();
 
+  function isPlaying() {
+    return game.status === "playing";
+  }
+
   // ---------- feedback algorithm ----------
 
   function evaluateGuess(guess, answer) {
@@ -765,7 +769,7 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
 
   var currentGuess = "";
   var activeRow = game.guesses.length;
-  var inputLocked = game.status !== "playing";
+  var inputLocked = !isPlaying();
   var hintIndex = game.hint ? game.hint.index : null;
 
   function composeFullGuess() {
@@ -807,6 +811,7 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
         tile.textContent = guess[i];
         var apply = function () {
           tile.classList.add(result[i]);
+          applyKeyStatus(guess[i], result[i]);
           renderKeyboard();
         };
         if (animate) {
@@ -817,7 +822,6 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
           apply();
         }
       })(i);
-      applyKeyStatus(guess[i], result[i]);
     }
   }
 
@@ -853,7 +857,7 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
     renderCompletedRow(idx, g.word, g.result, false);
   });
   renderKeyboard();
-  if (game.status === "playing") renderCurrentRow();
+  if (isPlaying()) renderCurrentRow();
 
   // ---------- toast ----------
 
@@ -894,20 +898,20 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
   }
 
   function offerHint() {
-    if (game.hintGiven || game.status !== "playing") return;
+    if (game.hintGiven || !isPlaying()) return;
     openModal("hint-modal");
   }
 
   function declineHint() {
     closeModal("hint-modal");
-    if (game.hintGiven || game.status !== "playing") return;
+    if (game.hintGiven || !isPlaying()) return;
     game.hintGiven = true;
     saveGame();
   }
 
   function giveHint() {
     closeModal("hint-modal");
-    if (game.hintGiven || game.status !== "playing") return;
+    if (game.hintGiven || !isPlaying()) return;
     var revealed = new Array(WORD_LENGTH).fill(false);
     game.guesses.forEach(function (g) {
       g.result.forEach(function (status, i) { if (status === "correct") revealed[i] = true; });
@@ -932,6 +936,20 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
     }
   }
 
+  var REVEAL_DURATION = WORD_LENGTH * 200 + 400;
+  var STATS_MODAL_DELAY = 1600;
+
+  function finishGame(status, onRevealed) {
+    game.status = status;
+    inputLocked = true;
+    saveGame();
+    recordStatsIfNeeded();
+    setTimeout(function () {
+      onRevealed();
+      setTimeout(openStatsModal, STATS_MODAL_DELAY);
+    }, REVEAL_DURATION);
+  }
+
   function submitGuess() {
     if (currentGuess.length < typedLimit()) {
       showToast("Not enough letters");
@@ -952,32 +970,20 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
     var rowFinished = activeRow;
     currentGuess = "";
 
-    var revealDuration = WORD_LENGTH * 200 + 400;
-
     if (won) {
-      game.status = "won";
-      inputLocked = true;
-      saveGame();
-      recordStatsIfNeeded();
-      setTimeout(function () {
+      finishGame("won", function () {
         celebrateRow(rowFinished);
-        setTimeout(function () { openStatsModal(); }, 1500);
-      }, revealDuration);
+      });
     } else if (game.guesses.length >= MAX_GUESSES) {
-      game.status = "lost";
-      inputLocked = true;
-      saveGame();
-      recordStatsIfNeeded();
-      setTimeout(function () {
+      finishGame("lost", function () {
         showToast(ANSWER.toUpperCase(), 3000);
-        setTimeout(function () { openStatsModal(); }, 1600);
-      }, revealDuration);
+      });
     } else {
       activeRow++;
       saveGame();
       renderCurrentRow();
       if (game.guesses.length === 4 && !game.hintGiven) {
-        setTimeout(offerHint, revealDuration);
+        setTimeout(offerHint, REVEAL_DURATION);
       }
     }
   }
@@ -1048,9 +1054,6 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
 
   // ---------- stats ----------
 
-  var statsRecordedForToday = game.status !== "playing" &&
-    stats.lastRecordedDayIndex === dayIndex;
-
   function recordStatsIfNeeded() {
     if (stats.lastRecordedDayIndex === dayIndex) return; // already recorded this puzzle
     stats.played++;
@@ -1099,7 +1102,7 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
     });
 
     var postGame = document.getElementById("post-game");
-    if (game.status !== "playing") {
+    if (!isPlaying()) {
       postGame.classList.remove("hidden");
     } else {
       postGame.classList.add("hidden");
@@ -1180,12 +1183,12 @@ const VALID_GUESSES = ["aahing","aaliis","aarrgh","abacas","abacus","abakas","ab
   });
 
   // record stats for an already-finished game from a previous session (e.g. page reload after win)
-  if (game.status !== "playing") {
+  if (!isPlaying()) {
     recordStatsIfNeeded();
   }
 
   // re-offer the hint if a reload happened before the pending offer's timer fired
-  if (game.status === "playing" && game.guesses.length >= 4 && !game.hintGiven) {
+  if (isPlaying() && game.guesses.length >= 4 && !game.hintGiven) {
     offerHint();
   }
 
